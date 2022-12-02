@@ -1,3 +1,5 @@
+const Alarm = require("./alarm");
+
 describe('Tyre Pressure Monitoring System', function () {
 
   describe('Alarm', function () {
