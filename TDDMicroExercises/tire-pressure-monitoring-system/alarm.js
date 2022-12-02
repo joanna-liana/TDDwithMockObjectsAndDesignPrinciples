@@ -1,10 +1,17 @@
 const Sensor = require("./sensor");
 
 class Alarm {
-  _lowPressureThreshold = 17;
-  _highPressureThreshold = 21;
-  _sensor = new Sensor();
+  _lowPressureThreshold;
+  _highPressureThreshold;
+  _sensor;
   _alarmOn = false;
+
+  constructor({ pressureRange, sensor } = {}) {
+    this._lowPressureThreshold = pressureRange?._lowPressureThreshold ?? 17;
+    this._highPressureThreshold = pressureRange?._highPressureThreshold ?? 21;
+
+    this._sensor = sensor ?? new Sensor();
+  }
 
   check() {
 
