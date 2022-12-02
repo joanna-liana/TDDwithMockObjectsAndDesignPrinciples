@@ -5,6 +5,7 @@ _ReSharper*/
 *.user
 .DS_Store
 *.pyc
+node_modules/
 
 #Doc
 *.rtf#
