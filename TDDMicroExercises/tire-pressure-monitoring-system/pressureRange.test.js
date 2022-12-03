@@ -22,19 +22,28 @@ describe('Pressure range', () => {
   });
 
   describe("checking if provided value is within the range", () => {
+    const LOW_THRESHOLD = 10;
+    const HIGH_THRESHOLD = 20;
+
+    let range;
+
+    beforeEach(() => {
+      range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
+    });
+
     describe("reports the value as within the range", () => {
       const testCases = [
-        ["below low threshold", 0],
-        ["above high threshold", 0],
+        ["below low threshold", LOW_THRESHOLD - 1],
+        ["above high threshold", HIGH_THRESHOLD + 2],
       ];
     });
 
     describe("reports the value as outside the range", () => {
       const testCases = [
-        ["matching low threshold", 0],
-        ["above low threshold", 0],
-        ["matching high threshold", 0],
-        ["below high threshold", 0],
+        ["matching low threshold", LOW_THRESHOLD],
+        ["above low threshold", LOW_THRESHOLD + 1],
+        ["matching high threshold", HIGH_THRESHOLD],
+        ["below high threshold", HIGH_THRESHOLD - 1],
       ];
     });
   });
