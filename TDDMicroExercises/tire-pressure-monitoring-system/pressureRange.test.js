@@ -27,15 +27,17 @@ describe('Pressure range', () => {
 
     let range;
 
-    beforeEach(() => {
-      range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
-    });
-
     describe("reports the value as within the range", () => {
       const testCases = [
         ["below low threshold", LOW_THRESHOLD - 1],
         ["above high threshold", HIGH_THRESHOLD + 2],
       ];
+
+      it.each(testCases)("%s", (_caseName, pressureValue) => {
+        range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
+
+        expect(range.checkValue(pressureValue)).toEqual(true);
+      });
     });
 
     describe("reports the value as outside the range", () => {
