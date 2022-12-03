@@ -1,21 +1,21 @@
-const PressureRange = require('./pressureRange');
+const Range = require('./range');
 
-describe('Pressure range', () => {
+describe('Range', () => {
   describe("new instance", () => {
     it("can be created with different low and high thresholds", () => {
-      const range = new PressureRange({ low: 0, high: 100 });
+      const range = new Range({ low: 0, high: 100 });
 
-      expect(range).toBeInstanceOf(PressureRange);
+      expect(range).toBeInstanceOf(Range);
     });
 
     describe("cannot be created", () => {
       it("with equal low and high thresholds", () => {
-        expect(() => new PressureRange({ low: 10, high: 10 }))
+        expect(() => new Range({ low: 10, high: 10 }))
           .toThrow();
       });
 
       it("if the low threshold is above the high one", () => {
-        expect(() => new PressureRange({ low: 11, high: 10 }))
+        expect(() => new Range({ low: 11, high: 10 }))
           .toThrow();
       });
     });
@@ -33,10 +33,10 @@ describe('Pressure range', () => {
         ["above high threshold", HIGH_THRESHOLD + 2],
       ];
 
-      it.each(testCases)("value %s", (_caseName, pressureValue) => {
-        range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
+      it.each(testCases)("value %s", (_caseName, value) => {
+        range = new Range({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
 
-        expect(range.isExceededBy(pressureValue)).toEqual(true);
+        expect(range.isExceededBy(value)).toEqual(true);
       });
     });
 
@@ -48,10 +48,10 @@ describe('Pressure range', () => {
         ["below high threshold", HIGH_THRESHOLD - 1],
       ];
 
-      it.each(testCases)("value %s", (_caseName, pressureValue) => {
-        range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
+      it.each(testCases)("value %s", (_caseName, value) => {
+        range = new Range({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
 
-        expect(range.isExceededBy(pressureValue)).toEqual(false);
+        expect(range.isExceededBy(value)).toEqual(false);
       });
     });
   });

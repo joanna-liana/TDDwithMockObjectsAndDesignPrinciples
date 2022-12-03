@@ -1,4 +1,4 @@
-const PressureRange = require('./pressureRange');
+const Range = require('./range');
 const Sensor = require("./sensor");
 
 class Alarm {
@@ -7,7 +7,7 @@ class Alarm {
   #alarmOn = false;
 
   constructor({ pressureThresholds, sensor } = {}) {
-    this.#allowedPressureRange = new PressureRange({
+    this.#allowedPressureRange = new Range({
       low: pressureThresholds?.low ?? 17,
       high: pressureThresholds?.high ?? 21
     });
