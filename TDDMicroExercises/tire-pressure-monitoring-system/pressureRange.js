@@ -14,7 +14,7 @@ class PressureRange {
   }
 
   #isValueWithinThreshold(pressureValue) {
-    return (pressureValue >= this.#threshold.low) && (pressureValue <= this.#threshold.low);
+    return (pressureValue >= this.#threshold.low) && (pressureValue <= this.#threshold.high);
   }
 }
 
