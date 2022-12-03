@@ -3,12 +3,12 @@ const Alarm = require("./alarm");
 describe('Tyre Pressure Monitoring System', function () {
 
   describe('Alarm', function () {
-    const MIN_THRESHOLD = 16;
-    const MAX_THRESHOLD = 22;
+    const HIGH_THRESHOLD = 16;
+    const LOW_THRESHOLD = 22;
 
     const pressureThresholds = {
-      low: MIN_THRESHOLD,
-      high: MAX_THRESHOLD
+      low: HIGH_THRESHOLD,
+      high: LOW_THRESHOLD
     };
 
     describe("is on", () => {
@@ -18,7 +18,7 @@ describe('Tyre Pressure Monitoring System', function () {
           pressureThresholds,
           sensor: {
             popNextPressurePsiValue: () => {
-              return MIN_THRESHOLD - 1;
+              return HIGH_THRESHOLD - 1;
             }
           }
         });
@@ -36,7 +36,7 @@ describe('Tyre Pressure Monitoring System', function () {
           pressureThresholds,
           sensor: {
             popNextPressurePsiValue: () => {
-              return MAX_THRESHOLD + 1;
+              return LOW_THRESHOLD + 1;
             }
           }
         });
@@ -51,10 +51,10 @@ describe('Tyre Pressure Monitoring System', function () {
 
     describe("is off when the pressure is within the normal range", () => {
       it.each([
-        ["matching low threshold", MIN_THRESHOLD],
-        ["above low threshold", MIN_THRESHOLD + 1],
-        ["matching high threshold", MAX_THRESHOLD],
-        ["below high threshold", MAX_THRESHOLD - 1]
+        ["matching low threshold", HIGH_THRESHOLD],
+        ["above low threshold", HIGH_THRESHOLD + 1],
+        ["matching high threshold", LOW_THRESHOLD],
+        ["below high threshold", LOW_THRESHOLD - 1]
       ])('%s', (scenario, pressureValue) => {
         // given
         const target = new Alarm({
