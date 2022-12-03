@@ -18,11 +18,6 @@ describe('Pressure range', () => {
         expect(() => new PressureRange({ low: 11, high: 10 }))
           .toThrow();
       });
-
-      it("if the high threshold is above the low one", () => {
-        expect(() => new PressureRange({ low: 10, high: 11 }))
-          .toThrow();
-      });
     });
   });
 
