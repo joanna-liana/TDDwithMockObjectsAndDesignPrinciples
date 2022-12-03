@@ -9,7 +9,7 @@ class PressureRange {
     this.#threshold = { low, high };
   }
 
-  checkValue(pressureValue) {
+  isExceededBy(pressureValue) {
     return !this.#isValueWithinThreshold(pressureValue);
   }
 
