@@ -1,3 +1,5 @@
+const PressureRange = require('./pressureRange');
+
 describe('Pressure range', () => {
   describe("new instance", () => {
     it("can be created with different low and high thresholds", () => {
@@ -7,11 +9,20 @@ describe('Pressure range', () => {
     });
 
     describe("cannot be created", () => {
-      it("with equal low and high thresholds", () => {});
+      it("with equal low and high thresholds", () => {
+        expect(() => new PressureRange({ low: 10, high: 10 }))
+          .toThrow();
+      });
 
-      it("if the low threshold is above the high one", () => {});
+      it("if the low threshold is above the high one", () => {
+        expect(() => new PressureRange({ low: 11, high: 10 }))
+          .toThrow();
+      });
 
-      it("if the high threshold is above the low one", () => {});
+      it("if the high threshold is above the low one", () => {
+        expect(() => new PressureRange({ low: 10, high: 11 }))
+          .toThrow();
+      });
     });
   });
 
