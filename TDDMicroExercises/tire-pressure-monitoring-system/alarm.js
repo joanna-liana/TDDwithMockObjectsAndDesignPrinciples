@@ -1,14 +1,16 @@
+const PressureRange = require('./pressureRange');
 const Sensor = require("./sensor");
 
 class Alarm {
-  _lowPressureThreshold;
-  _highPressureThreshold;
+  #pressureRange;
   _sensor;
   _alarmOn = false;
 
   constructor({ pressureThresholds, sensor } = {}) {
-    this._lowPressureThreshold = pressureThresholds?.low ?? 17;
-    this._highPressureThreshold = pressureThresholds?.high ?? 21;
+    this.#pressureRange = new PressureRange({
+      low: pressureThresholds?.low ?? 17,
+      high: pressureThresholds?.high ?? 21
+    });
 
     this._sensor = sensor ?? new Sensor();
   }
@@ -17,7 +19,7 @@ class Alarm {
 
     var psiPressureValue = this._sensor.popNextPressurePsiValue();
 
-    if (psiPressureValue < this._lowPressureThreshold || this._highPressureThreshold < psiPressureValue) {
+    if (this.#pressureRange.isExceededBy(psiPressureValue)) {
       this._alarmOn = true;
     }
   }
