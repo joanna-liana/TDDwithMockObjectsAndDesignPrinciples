@@ -1,6 +1,6 @@
 class PressureRange {
   constructor({ low, high }) {
-    if (low > high) {
+    if (low >= high) {
       throw new Error("Invalid thresholds");
     }
   }
