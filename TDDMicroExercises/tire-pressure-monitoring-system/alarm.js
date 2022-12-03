@@ -16,8 +16,7 @@ class Alarm {
   }
 
   check() {
-
-    var psiPressureValue = this.#sensor.popNextPressurePsiValue();
+    const psiPressureValue = this.#sensor.popNextPressurePsiValue();
 
     if (this.#pressureRange.isExceededBy(psiPressureValue)) {
       this.#alarmOn = true;
