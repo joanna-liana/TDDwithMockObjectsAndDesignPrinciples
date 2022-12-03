@@ -31,11 +31,14 @@ describe('Tyre Pressure Monitoring System', function () {
 
     it('is on when the pressure is too high', function () {
       // given
-      const target = new Alarm();
-
-      target._sensor = {
-        popNextPressurePsiValue: () => MAX_THRESHOLD
-      };
+      const target = new Alarm({
+        pressureThresholds,
+        sensor: {
+          popNextPressurePsiValue: () => {
+            return MAX_THRESHOLD + 1;
+          }
+        }
+      });
 
       // when
       target.check();
@@ -47,11 +50,14 @@ describe('Tyre Pressure Monitoring System', function () {
 
     it.each([MIN_THRESHOLD, MIN_THRESHOLD + 1, MAX_THRESHOLD, MAX_THRESHOLD - 1])('is off when the pressure is within the normal range', function (pressureValue) {
       // given
-      const target = new Alarm();
-
-      target._sensor = {
-        popNextPressurePsiValue: () => pressureValue
-      };
+      const target = new Alarm({
+        pressureThresholds,
+        sensor: {
+          popNextPressurePsiValue: () => {
+            return pressureValue;
+          }
+        }
+      });
 
       // when
       target.check();
