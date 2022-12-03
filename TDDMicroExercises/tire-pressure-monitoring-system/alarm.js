@@ -6,9 +6,9 @@ class Alarm {
   _sensor;
   _alarmOn = false;
 
-  constructor({ pressureRange, sensor } = {}) {
-    this._lowPressureThreshold = pressureRange?._lowPressureThreshold ?? 17;
-    this._highPressureThreshold = pressureRange?._highPressureThreshold ?? 21;
+  constructor({ pressureThresholds, sensor } = {}) {
+    this._lowPressureThreshold = pressureThresholds?.low ?? 17;
+    this._highPressureThreshold = pressureThresholds?.high ?? 21;
 
     this._sensor = sensor ?? new Sensor();
   }
