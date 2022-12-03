@@ -11,59 +11,67 @@ describe('Tyre Pressure Monitoring System', function () {
       high: MAX_THRESHOLD
     };
 
-    it('is on when the pressure is too low', function () {
-      // given
-      const target = new Alarm({
-        pressureThresholds,
-        sensor: {
-          popNextPressurePsiValue: () => {
-            return MIN_THRESHOLD - 1;
+    describe("is on", () => {
+      it('when the pressure is too low', function () {
+        // given
+        const target = new Alarm({
+          pressureThresholds,
+          sensor: {
+            popNextPressurePsiValue: () => {
+              return MIN_THRESHOLD - 1;
+            }
           }
-        }
+        });
+
+        // when
+        target.check();
+
+        // then
+        expect(target.alarmOn()).toBe(true);
       });
 
-      // when
-      target.check();
+      it('when the pressure is too high', function () {
+        // given
+        const target = new Alarm({
+          pressureThresholds,
+          sensor: {
+            popNextPressurePsiValue: () => {
+              return MAX_THRESHOLD + 1;
+            }
+          }
+        });
 
-      // then
-      expect(target.alarmOn()).toBe(true);
+        // when
+        target.check();
+
+        // then
+        expect(target.alarmOn()).toBe(true);
+      });
     });
 
-    it('is on when the pressure is too high', function () {
-      // given
-      const target = new Alarm({
-        pressureThresholds,
-        sensor: {
-          popNextPressurePsiValue: () => {
-            return MAX_THRESHOLD + 1;
+    describe("is off when the pressure is within the normal range", () => {
+      it.each([
+        ["matching low threshold", MIN_THRESHOLD],
+        ["above low threshold", MIN_THRESHOLD + 1],
+        ["matching high threshold", MAX_THRESHOLD],
+        ["below high threshold", MAX_THRESHOLD - 1]
+      ])('%s', (scenario, pressureValue) => {
+        // given
+        const target = new Alarm({
+          pressureThresholds,
+          sensor: {
+            popNextPressurePsiValue: () => {
+              return pressureValue;
+            }
           }
-        }
+        });
+
+        // when
+        target.check();
+
+        // then
+        expect(target.alarmOn()).toBe(false);
       });
-
-      // when
-      target.check();
-
-      // then
-      expect(target.alarmOn()).toBe(true);
-    });
-
-
-    it.each([MIN_THRESHOLD, MIN_THRESHOLD + 1, MAX_THRESHOLD, MAX_THRESHOLD - 1])('is off when the pressure is within the normal range', function (pressureValue) {
-      // given
-      const target = new Alarm({
-        pressureThresholds,
-        sensor: {
-          popNextPressurePsiValue: () => {
-            return pressureValue;
-          }
-        }
-      });
-
-      // when
-      target.check();
-
-      // then
-      expect(target.alarmOn()).toBe(false);
     });
 
   });
