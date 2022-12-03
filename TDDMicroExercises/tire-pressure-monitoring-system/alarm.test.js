@@ -6,15 +6,21 @@ describe('Tyre Pressure Monitoring System', function () {
     const MIN_THRESHOLD = 16;
     const MAX_THRESHOLD = 22;
 
+    const pressureRange = {
+      _lowPressureThreshold: MIN_THRESHOLD,
+      _highPressureThreshold: MAX_THRESHOLD
+    };
+
     it('is on when the pressure is too low', function () {
       // given
-      const target = new Alarm();
-
-      target._sensor = {
-        popNextPressurePsiValue: () => {
-          return MIN_THRESHOLD;
+      const target = new Alarm({
+        pressureRange,
+        sensor: {
+          popNextPressurePsiValue: () => {
+            return MIN_THRESHOLD - 1;
+          }
         }
-      };
+      });
 
       // when
       target.check();
