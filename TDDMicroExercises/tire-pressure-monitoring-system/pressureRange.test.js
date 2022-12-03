@@ -47,6 +47,12 @@ describe('Pressure range', () => {
         ["matching high threshold", HIGH_THRESHOLD],
         ["below high threshold", HIGH_THRESHOLD - 1],
       ];
+
+      it.each(testCases)("value %s", (_caseName, pressureValue) => {
+        range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
+
+        expect(range.isExceededBy(pressureValue)).toEqual(false);
+      });
     });
   });
 });
