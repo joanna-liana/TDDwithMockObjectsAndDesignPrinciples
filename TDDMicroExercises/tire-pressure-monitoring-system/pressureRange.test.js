@@ -33,7 +33,7 @@ describe('Pressure range', () => {
         ["above high threshold", HIGH_THRESHOLD + 2],
       ];
 
-      it.each(testCases)("%s", (_caseName, pressureValue) => {
+      it.each(testCases)("value %s", (_caseName, pressureValue) => {
         range = new PressureRange({ low: LOW_THRESHOLD, high: HIGH_THRESHOLD });
 
         expect(range.checkValue(pressureValue)).toEqual(true);
