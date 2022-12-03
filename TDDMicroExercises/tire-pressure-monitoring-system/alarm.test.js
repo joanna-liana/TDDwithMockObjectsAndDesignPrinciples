@@ -45,7 +45,7 @@ describe('Tyre Pressure Monitoring System', function () {
     });
 
 
-    it.each([MIN_THRESHOLD + 1, MAX_THRESHOLD - 1])('is off when the pressure is within the normal range', function (pressureValue) {
+    it.each([MIN_THRESHOLD, MIN_THRESHOLD + 1, MAX_THRESHOLD, MAX_THRESHOLD - 1])('is off when the pressure is within the normal range', function (pressureValue) {
       // given
       const target = new Alarm();
 
